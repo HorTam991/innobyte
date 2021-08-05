@@ -1,0 +1,22 @@
+Wizz Air;Budapest;London;1450;145
+Wizz Air;Budapest;Roma;810;105
+Wizz Air;Budapest;Madrid;1975;195
+Wizz Air;Roma;London;1435;210
+Wizz Air;Roma;Madrid;1365;205
+Wizz Air;London;Madrid;1265;190
+Wizz Air;Madrid;London;1265;190
+British Airways;Budapest;London;1450;155
+British Airways;Budapest;Madrid;1975;205
+British Airways;London;New York;5510;470
+British Airways;New York;Washington;475;55
+British Airways;Washington;New York;475;55
+British Airways;Washington;Los Angeles;3695;340
+Lufthansa;Budapest;London;1450;150
+Lufthansa;Budapest;Madrid;1975;210
+Lufthansa;London;New York;5510;485
+Lufthansa;London;Washington;5900;480
+Lufthansa;Madrid;Washington;6090;470
+Lufthansa;New York;Washington;475;55
+Lufthansa;Washington;New York;475;55
+Lufthansa;New York;Los Angeles;3805;350
+Lufthansa;Washington;Los Angeles;3695;340

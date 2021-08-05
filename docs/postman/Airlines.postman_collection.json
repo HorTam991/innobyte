@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "ad608844-d324-47d5-a621-9ec469ae6812",
+		"name": "Airlines",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 City - Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "import",
+							"type": "file",
+							"src": "/D:/Temp/Innobyte/airlines/docs/task/input_city.txt"
+						}
+					]
+				},
+				"url": "http://localhost:8080/city/upload"
+			},
+			"response": []
+		},
+		{
+			"name": "02 City - Find all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/city"
+			},
+			"response": []
+		},
+		{
+			"name": "03 City - Find by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/city/1"
+			},
+			"response": []
+		},
+		{
+			"name": "04 City - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cityName\": \"NPécs\",\r\n    \"population\": 150000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/city"
+			},
+			"response": []
+		},
+		{
+			"name": "05 City - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 8,\r\n    \"cityName\": \"Pécs\",\r\n    \"population\": 150000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/city"
+			},
+			"response": []
+		},
+		{
+			"name": "06 City - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/city/8"
+			},
+			"response": []
+		},
+		{
+			"name": "07 Flight - Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "import",
+							"type": "file",
+							"src": "/D:/Temp/Innobyte/airlines/docs/task/input_flight.txt"
+						}
+					]
+				},
+				"url": "http://localhost:8080/flight/upload"
+			},
+			"response": []
+		},
+		{
+			"name": "08 Flight - Find all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/flight"
+			},
+			"response": []
+		},
+		{
+			"name": "08 Flight - Find by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/flight/1"
+			},
+			"response": []
+		},
+		{
+			"name": "08 Flight - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"airlineId\": 1,\r\n    \"fromCityId\": 6,\r\n    \"toCityId\": 7,\r\n    \"distance\": 1500,\r\n    \"flightTime\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/flight"
+			},
+			"response": []
+		},
+		{
+			"name": "09 Flight - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 23,\r\n    \"airlineId\": 1,\r\n    \"fromCityId\": 6,\r\n    \"toCityId\": 7,\r\n    \"distance\": 1700,\r\n    \"flightTime\": 170\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/flight"
+			},
+			"response": []
+		},
+		{
+			"name": "10 Flight - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/flight/23"
+			},
+			"response": []
+		},
+		{
+			"name": "11 Airline - Find all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/airline"
+			},
+			"response": []
+		},
+		{
+			"name": "12 Airline - Find by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/airline/1"
+			},
+			"response": []
+		},
+		{
+			"name": "13 Airline - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"airlineName\": \"Airline teszt\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/airline"
+			},
+			"response": []
+		},
+		{
+			"name": "14 Airline - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 4,\r\n    \"airlineName\": \"Airline update\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/airline"
+			},
+			"response": []
+		},
+		{
+			"name": "15 Airline - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/airline/4"
+			},
+			"response": []
+		},
+		{
+			"name": "16 Airline - Airline flights",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/airline/1/flight"
+			},
+			"response": []
+		},
+		{
+			"name": "17 Dijkstra all airlines",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight/result?fromCity=Budapest&toCity=New York",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"result"
+					],
+					"query": [
+						{
+							"key": "fromCity",
+							"value": "Budapest"
+						},
+						{
+							"key": "toCity",
+							"value": "New York"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18 Dijkstra one airline",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight/result/1/?fromCity=Budapest&toCity=Los Angeles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"result",
+						"1",
+						""
+					],
+					"query": [
+						{
+							"key": "fromCity",
+							"value": "Budapest"
+						},
+						{
+							"key": "toCity",
+							"value": "Los Angeles"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19 Ways between cities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight/way?fromCity=Budapest&toCity=London",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"way"
+					],
+					"query": [
+						{
+							"key": "fromCity",
+							"value": "Budapest"
+						},
+						{
+							"key": "toCity",
+							"value": "London"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

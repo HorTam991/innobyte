@@ -1,0 +1,7 @@
+Budapest;1800000
+London;8800000
+Los Angeles;13800000
+Madrid;3100000
+New York;8500000
+Roma;2900000
+Washington;2700000
