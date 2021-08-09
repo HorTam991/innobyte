@@ -102,25 +102,11 @@ public class FlightController {
         }
     }
 
-    @Deprecated
-    @RequestMapping(value = "/resultOld", method = RequestMethod.GET, produces = SystemKeys.Spring.PRODUCES_JSON_UTF8)
-    public ResponseEntity<String> getRouteWithAllAirlinesOld(@RequestParam(value = "fromCity") final String fromCityName,
-                                                             @RequestParam(value = "toCity") final String toCityName) {
-        try {
-            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.getFlightRoute(null, fromCityName, toCityName)), HttpStatus.OK);
-        } catch (JsonProcessingException e) {
-            log.error("getRouteWithAllAirlines - ", e);
-            return new ResponseEntity<>(SystemKeys.ResponseTexts.ERROR_COMPILING_RESPONSE, HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (NotFoundException | DijkstraException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @RequestMapping(value = "/result", method = RequestMethod.GET, produces = SystemKeys.Spring.PRODUCES_JSON_UTF8)
-    public ResponseEntity<String> getRouteWithAllAirlines(@RequestParam(value = "fromCity") final String fromCityName,
-                                                          @RequestParam(value = "toCity") final String toCityName) {
+    public ResponseEntity<String> getRouteWithAllAirlines(@RequestParam(value = "fromCityId") final Long fromCityId,
+                                                          @RequestParam(value = "toCityId") final Long toCityId) {
         try {
-            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.getFlightRoute(null, fromCityName, toCityName)), HttpStatus.OK);
+            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.getFlightRoute(null, fromCityId, toCityId)), HttpStatus.OK);
         } catch (JsonProcessingException e) {
             log.error("getRouteWithAllAirlines - ", e);
             return new ResponseEntity<>(SystemKeys.ResponseTexts.ERROR_COMPILING_RESPONSE, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -131,11 +117,11 @@ public class FlightController {
 
     @RequestMapping(value = "/result/{id}", method = RequestMethod.GET, produces = SystemKeys.Spring.PRODUCES_JSON_UTF8)
     public ResponseEntity<String> getRouteWithOneAirlines(@PathVariable final Long id,
-                                                          @RequestParam(value = "fromCity") final String fromCityName,
-                                                          @RequestParam(value = "toCity") final String toCityName) {
+                                                          @RequestParam(value = "fromCityId") final Long fromCityId,
+                                                          @RequestParam(value = "toCityId") final Long toCityId) {
 
         try {
-            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.getFlightRoute(id, fromCityName, toCityName)), HttpStatus.OK);
+            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.getFlightRoute(id, fromCityId, toCityId)), HttpStatus.OK);
         } catch (JsonProcessingException e) {
             log.error("getRouteWithOneAirlines - ", e);
             return new ResponseEntity<>(SystemKeys.ResponseTexts.ERROR_COMPILING_RESPONSE, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -145,10 +131,10 @@ public class FlightController {
     }
 
     @RequestMapping(value = "/way", method = RequestMethod.GET, produces = SystemKeys.Spring.PRODUCES_JSON_UTF8)
-    public ResponseEntity<String> waysBetweenCities(@RequestParam(value = "fromCity") final String fromCityName,
-                                                    @RequestParam(value = "toCity") final String toCityName) {
+    public ResponseEntity<String> waysBetweenCities(@RequestParam(value = "fromCityId") final Long fromCityId,
+                                                    @RequestParam(value = "toCityId") final Long toCityId) {
         try {
-            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.findAllByFromCityIdAndToCityId(fromCityName, toCityName)), HttpStatus.OK);
+            return new ResponseEntity<>(this.objectMapper.writeValueAsString(this.flightService.findAllByFromCityIdAndToCityId(fromCityId, toCityId)), HttpStatus.OK);
         } catch (JsonProcessingException e) {
             log.error("waysBetweenCities - ", e);
             return new ResponseEntity<>(SystemKeys.ResponseTexts.ERROR_COMPILING_RESPONSE, HttpStatus.INTERNAL_SERVER_ERROR);

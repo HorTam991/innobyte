@@ -1,6 +1,5 @@
 package hu.tamas.airlines.service;
 
-import hu.tamas.airlines.model.City;
 import hu.tamas.airlines.model.Flight;
 import hu.tamas.airlines.util.exception.DijkstraException;
 import hu.tamas.airlines.util.exception.NotFoundException;
@@ -24,11 +23,8 @@ public interface FlightService {
 
     List<Flight> findAllByAirlineId(Long airlineId);
 
-    @Deprecated
-    LinkedList<City> getFlightRouteCities(Long airlineId, String fromCityName, String toCityName) throws NotFoundException, DijkstraException;
+    LinkedList<Flight> getFlightRoute(Long airlineId, Long fromCityId, Long toCityId) throws NotFoundException, DijkstraException;
 
-    LinkedList<Flight> getFlightRoute(Long airlineId, String fromCityName, String toCityName) throws NotFoundException, DijkstraException;
-
-    List<Flight> findAllByFromCityIdAndToCityId(String fromCityName, String  toCityName) throws NotFoundException;
+    List<Flight> findAllByFromCityIdAndToCityId(Long fromCityId, Long  toCityId) throws NotFoundException;
     
 }

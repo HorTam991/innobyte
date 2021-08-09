@@ -247,7 +247,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/flight/result?fromCity=Budapest&toCity=New York",
+					"raw": "http://localhost:8080/flight/result?fromCityId=1&toCityId=7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -259,12 +259,12 @@
 					],
 					"query": [
 						{
-							"key": "fromCity",
-							"value": "Budapest"
+							"key": "fromCityId",
+							"value": "1"
 						},
 						{
-							"key": "toCity",
-							"value": "New York"
+							"key": "toCityId",
+							"value": "7"
 						},
 						{
 							"key": "",
@@ -282,7 +282,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/flight/result/1/?fromCity=Budapest&toCity=Los Angeles",
+					"raw": "http://localhost:8080/flight/result/1/?fromCityId=1&toCityId=7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -296,12 +296,12 @@
 					],
 					"query": [
 						{
-							"key": "fromCity",
-							"value": "Budapest"
+							"key": "fromCityId",
+							"value": "1"
 						},
 						{
-							"key": "toCity",
-							"value": "Los Angeles"
+							"key": "toCityId",
+							"value": "7"
 						}
 					]
 				}
@@ -314,7 +314,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/flight/way?fromCity=Budapest&toCity=London",
+					"raw": "http://localhost:8080/flight/way?fromCityId=1&toCityId=4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -326,12 +326,12 @@
 					],
 					"query": [
 						{
-							"key": "fromCity",
-							"value": "Budapest"
+							"key": "fromCityId",
+							"value": "1"
 						},
 						{
-							"key": "toCity",
-							"value": "London"
+							"key": "toCityId",
+							"value": "4"
 						}
 					]
 				}

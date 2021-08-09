@@ -8,7 +8,6 @@ import hu.tamas.airlines.repository.AirlineRepository;
 import hu.tamas.airlines.repository.CityRepository;
 import hu.tamas.airlines.repository.FlightRepository;
 import hu.tamas.airlines.util.Dijkstra;
-import hu.tamas.airlines.util.DijkstraV2;
 import hu.tamas.airlines.util.SystemKeys;
 import hu.tamas.airlines.util.exception.DijkstraException;
 import hu.tamas.airlines.util.exception.NotFoundException;
@@ -93,17 +92,17 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public LinkedList<City> getFlightRouteCities(Long airlineId, String fromCityName, String toCityName) throws NotFoundException, DijkstraException {
-        if (fromCityName.equals(toCityName)) {
+    public LinkedList<Flight> getFlightRoute(Long airlineId, Long fromCityId, Long toCityId) throws NotFoundException, DijkstraException {
+        if (fromCityId.equals(toCityId)) {
             throw new DijkstraException(SystemKeys.ResponseTexts.SAME_CITIES_ERROR);
         }
-        Optional<City> source = this.cityRepository.findByCityName(fromCityName);
-        Optional<City> destination = this.cityRepository.findByCityName(toCityName);
+        Optional<City> source = this.cityRepository.findById(fromCityId);
+        Optional<City> destination = this.cityRepository.findById(toCityId);
         if (!source.isPresent()) {
-            throw new NotFoundException("Source city (" + fromCityName + ") not found!");
+            throw new NotFoundException("Source city (" + fromCityId + ") not found!");
         }
         if (!destination.isPresent()) {
-            throw new NotFoundException("Destination city (" + toCityName + ") not found!");
+            throw new NotFoundException("Destination city (" + toCityId + ") not found!");
         }
 
         List<Flight> edges;
@@ -120,49 +119,18 @@ public class FlightServiceImpl implements FlightService {
         FlightGraph graph = new FlightGraph(edges);
         Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.execute(source.get());
-        return dijkstra.getPath(destination.get());
-    }
-
-    @Override
-    public LinkedList<Flight> getFlightRoute(Long airlineId, String fromCityName, String toCityName) throws NotFoundException, DijkstraException {
-        if (fromCityName.equals(toCityName)) {
-            throw new DijkstraException(SystemKeys.ResponseTexts.SAME_CITIES_ERROR);
-        }
-        Optional<City> source = this.cityRepository.findByCityName(fromCityName);
-        Optional<City> destination = this.cityRepository.findByCityName(toCityName);
-        if (!source.isPresent()) {
-            throw new NotFoundException("Source city (" + fromCityName + ") not found!");
-        }
-        if (!destination.isPresent()) {
-            throw new NotFoundException("Destination city (" + toCityName + ") not found!");
-        }
-
-        List<Flight> edges;
-        if (airlineId != null) {
-            Optional<Airline> airline = this.airlineRepository.findById(airlineId);
-            if (!airline.isPresent()) {
-                throw new NotFoundException("Airline (" + airlineId + ") not found!");
-            }
-            edges = this.flightRepository.findAllByAirlineId(airline.get().getId());
-        } else {
-            edges = this.flightRepository.findAll();
-        }
-
-        FlightGraph graph = new FlightGraph(edges);
-        DijkstraV2 dijkstra = new DijkstraV2(graph);
-        dijkstra.execute(source.get());
         return dijkstra.getPath(source.get(), destination.get());
     }
 
     @Override
-    public List<Flight> findAllByFromCityIdAndToCityId(String fromCityName, String  toCityName) throws NotFoundException {
-        Optional<City> source = this.cityRepository.findByCityName(fromCityName);
-        Optional<City> destination = this.cityRepository.findByCityName(toCityName);
+    public List<Flight> findAllByFromCityIdAndToCityId(Long fromCityId, Long toCityId) throws NotFoundException {
+        Optional<City> source = this.cityRepository.findById(fromCityId);
+        Optional<City> destination = this.cityRepository.findById(toCityId);
         if (!source.isPresent()) {
-            throw new NotFoundException("Source city (" + fromCityName + ") not found!");
+            throw new NotFoundException("Source city (" + fromCityId + ") not found!");
         }
         if (!destination.isPresent()) {
-            throw new NotFoundException("Destination city (" + toCityName + ") not found!");
+            throw new NotFoundException("Destination city (" + toCityId + ") not found!");
         }
         return this.flightRepository.findAllByFromCityIdAndToCityId(source.get().getId(), destination.get().getId());
     }

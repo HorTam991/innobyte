@@ -6,14 +6,13 @@ import hu.tamas.airlines.model.FlightGraph;
 
 import java.util.*;
 
-@Deprecated
 public class Dijkstra {
 
     private final List<Flight> edges;
 
     private Set<City> settledNodes;
     private Set<City> unSettledNodes;
-    private Map<City, City> predecessors;
+    private Map<Flight, City> predecessors;
     private Map<City, Integer> distance;
 
     public Dijkstra(FlightGraph graph) {
@@ -36,15 +35,16 @@ public class Dijkstra {
     }
 
     private void findMinimalDistances(City node) {
-        List<City> adjacentNodes = getNeighbors(node);
-        for (City target : adjacentNodes) {
-            if (getShortestDistance(target) > getShortestDistance(node) + getDistance(node, target)) {
-                distance.put(target, getShortestDistance(node) + getDistance(node, target));
+        List<Flight> adjacentNodes = getNeighbors(node);
+        for (Flight target : adjacentNodes) {
+            if (getShortestDistance(target.getToCity()) > getShortestDistance(node) + getDistance(node, target.getToCity())) {
+                distance.put(target.getToCity(), getShortestDistance(node) + getDistance(node, target.getToCity()));
                 predecessors.put(target, node);
-                unSettledNodes.add(target);
+                unSettledNodes.add(target.getToCity());
             }
         }
     }
+
 
     private int getDistance(City node, City target) {
         for (Flight flight : edges) {
@@ -55,11 +55,11 @@ public class Dijkstra {
         throw new RuntimeException("Should not happen");
     }
 
-    private List<City> getNeighbors(City node) {
-        List<City> neighbors = new ArrayList<>();
-        for (Flight Flight : edges) {
-            if (Flight.getFromCity().equals(node) && !isSettled(Flight.getToCity())) {
-                neighbors.add(Flight.getToCity());
+    private List<Flight> getNeighbors(City node) {
+        List<Flight> neighbors = new ArrayList<>();
+        for (Flight flight : edges) {
+            if (flight.getFromCity().equals(node) && !isSettled(flight.getToCity())) {
+                neighbors.add(flight);
             }
         }
         return neighbors;
@@ -67,12 +67,12 @@ public class Dijkstra {
 
     private City getMinimum(Set<City> vertexes) {
         City minimum = null;
-        for (City City : vertexes) {
+        for (City city : vertexes) {
             if (minimum == null) {
-                minimum = City;
+                minimum = city;
             } else {
-                if (getShortestDistance(City) < getShortestDistance(minimum)) {
-                    minimum = City;
+                if (getShortestDistance(city) < getShortestDistance(minimum)) {
+                    minimum = city;
                 }
             }
         }
@@ -92,17 +92,63 @@ public class Dijkstra {
         }
     }
 
-    public LinkedList<City> getPath(City target) {
-        LinkedList<City> path = new LinkedList<>();
-        City step = target;
-        if (predecessors.get(step) == null) {
-            return path;
+    public LinkedList<Flight> getPath(City source, City target) {
+        Set<Flight> setPath = new HashSet<>();
+        boolean containsTarget = false;
+        for (Flight flight : predecessors.keySet()) {
+            if (flight.getToCity().getId().equals(target.getId())) {
+                containsTarget = true;
+                break;
+            }
         }
-        path.add(step);
-        while (predecessors.get(step) != null) {
-            step = predecessors.get(step);
-            path.add(step);
+        if (!containsTarget) {
+            return new LinkedList<>();
         }
+        Flight lastItem = getFlightByTargetCity(target);
+        setPath.add(lastItem);
+        if (lastItem.getFromCity().getId().equals(source.getId()) && lastItem.getToCity().getId().equals(target.getId())) {
+            return createPathFromSet(setPath);
+        }
+
+        City step = lastItem.getFromCity();
+        while (!step.getId().equals(target.getId())) {
+            Flight pathItem = getFlightByTargetCity(step);
+            if (pathItem != null) {
+                setPath.add(pathItem);
+                if (pathItem.getToCity().getId().equals(target.getId()) || pathItem.getFromCity().getId().equals(source.getId())) {
+                    break;
+                }
+
+                step = pathItem.getFromCity();
+            }
+        }
+        return createPathFromSet(setPath);
+    }
+
+    private Flight getFlightByTargetCity(City target) {
+        Flight result = null;
+        Flight firsFlight = null;
+        for (Flight flight : predecessors.keySet()) {
+            if (flight.getToCity().getId().equals(target.getId())) {
+                firsFlight = flight;
+                result = flight;
+                break;
+            }
+        }
+        Flight actualFlight;
+        for (Flight flight : predecessors.keySet()) {
+            if (flight.getToCity().getId().equals(target.getId())) {
+                actualFlight = flight;
+                if (actualFlight.getDistance() < firsFlight.getDistance()) {
+                    result = actualFlight;
+                }
+            }
+        }
+        return result;
+    }
+
+    private LinkedList<Flight> createPathFromSet(Set<Flight> setPath) {
+        LinkedList<Flight> path = new LinkedList<>(setPath);
         Collections.reverse(path);
         return path;
     }
